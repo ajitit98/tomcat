@@ -1,0 +1,30 @@
+---
+- hosts: localhost 
+  become: yes
+  gather_facts: no 
+  tasks: 
+  - name: Install tomcat in centos7 
+    yum: 
+      name: tomcat
+      state: present
+  - template: 
+      src: tomcat.conf.j2
+      dest: /usr/share/tomcat/conf/tomcat.conf 
+  - name: Install "{{item}}"
+    yum: 
+      name: "{{item}}"
+    with_items: 
+    - tomcat-webapps
+    - tomcat-admin-webapps 
+    - tomcat-docs-webapp
+    - tomcat-javadoc
+  - name: create tomcat user and password 
+    template: 
+      src: tomcat-users.xml.j2
+      dest: /usr/share/tomcat/conf/tomcat-users.xml
+  - name: Enable and start tomcat service 
+    service: 
+      name: tomcat
+      state: started 
+      enabled: yes
+    

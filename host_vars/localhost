@@ -1,0 +1,6 @@
+---
+max_size: '512'
+max_pem: '256'
+user_name: 'admin'
+user_pass: 'adminadmin'
+user_role: 'manager-gui,admin-gui'
